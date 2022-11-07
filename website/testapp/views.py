@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse 
 from django.views.decorators.http import require_http_methods 
 
+from django.views.generic import TemplateView
+
 # Create your views here.
 
 
@@ -32,3 +34,10 @@ def pong(request):
 		response= HttpResponse()
 		response["Allow"]= ", ".join(['GET' ,'HEAD', 'OPTIONS'])
 		return response 
+
+
+
+class Status(TemplateView): 
+
+	extra_content= {"status": "Good"}
+	template_name= "testapp/status.html" 
