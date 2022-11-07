@@ -31,3 +31,6 @@ typing-extensions   4.1.1
 virtualenv          20.16.6
 wheel               0.34.2 
 zipp                3.6.0  
+djangorestframework==3.14.0
+django-extensions==3.2.1
+typing-extensions==4.1.1
