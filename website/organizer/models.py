@@ -19,7 +19,7 @@ class Tag(models.Model):
 
 class Startup(models.Model): 
 	name= models.CharField(max_length=31, db_index=True) 
-	slug= models.SLugField(max_length=31, unique= True, help_text="A label for URL config") 
+	slug= models.SlugField(max_length=31, unique= True, help_text="A label for URL config") 
 	description= models.TextField()
 	founded_date= models.DateField("date founded") 
 	contact= models.EmailField() 
