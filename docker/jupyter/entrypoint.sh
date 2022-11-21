@@ -2,7 +2,7 @@
 #!/usr/bin/env sh
 
 postgres_ready() {
-python3.7 << END
+python3.11 << END
 from sys import exit
 from psycopg2 import connect, OperationalError
 try:
@@ -26,6 +26,6 @@ done;
 
 >&2 echo "Postgres is available"
 
-python3.7 manage.py shell_plus --notebook
+jupyter notebook --allow-root
 
 

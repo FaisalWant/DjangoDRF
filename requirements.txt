@@ -7,11 +7,8 @@ backcall==0.2.0
 bleach==4.1.0
 cffi==1.15.1
 cfgv==3.3.1
-dataclasses==0.8
-decorator==5.1.1
-defusedxml==0.7.1
-distlib==0.3.6
 Django==3.2
+django-environ==0.4.5
 django-extensions==3.2.1
 djangorestframework==3.14.0
 entrypoints==0.4
