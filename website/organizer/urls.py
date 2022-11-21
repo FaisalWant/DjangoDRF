@@ -1,12 +1,14 @@
 from django.urls import path 
 
 
-from .views import HelloWorld
+from .views import TagApiDetail, TagApiList 
 
 
 
 urlpatterns=[
 
-path("", HelloWorld.as_view(), name="hello_world")
+path("<int:pk>/", TagApiDetail.as_view(), name="hello"),
+path("", TagApiList.as_view(), name="hello_world")
+
 
 ]
