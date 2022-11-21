@@ -1,12 +1,12 @@
 from django.urls import path 
 
 
-from .views import hello_world 
+from .views import HelloWorld
 
 
 
 urlpatterns=[
 
-path("", hello_world, name="hello_world")
+path("", HelloWorld.as_view(), name="hello_world")
 
 ]
