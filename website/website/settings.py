@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'testapp',
     'blog',
     'rest_framework',
+    'django_extensions',
     'organizer'
 ]
 

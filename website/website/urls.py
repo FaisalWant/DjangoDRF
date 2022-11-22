@@ -20,5 +20,5 @@ from organizer import urls as organizer_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include(testapp_urls)),
-    path("org", include(organizer_urls))
+    path("org/", include(organizer_urls))
 ]
