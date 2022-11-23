@@ -26,6 +26,6 @@ done;
 
 >&2 echo "Postgres is available"
 
-jupyter notebook --allow-root
+python3.11 manage.py shell_plus --notebook 
 
 
