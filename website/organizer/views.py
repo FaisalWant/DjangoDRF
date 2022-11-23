@@ -13,21 +13,23 @@ from django.shortcuts import (
 	get_object_or_404
 	)
 
+from rest_framework.renderers import JSONRenderer
+
+from .serializers import TagSerializer
+
+
+
 
 class TagApiDetail(View): 
 
 	def get(self, request, pk ): 
 
 		tag= get_object_or_404(Tag,pk=pk)
-	
+		
+		s_tag= TagSerializer(tag) 
 
-		tag_json= json.dumps(
-			dict(
+		tag_json= JSONRenderer().render(s_tag.data)
 
-			 id=tag.pk,
-			 name=tag.name, 
-			 slug= tag.slug)
-			)
 		return HttpResponse(tag_json, content_type="application/json") 
 
 
@@ -40,9 +42,12 @@ class TagApiList(View):
 
 		tag_list = get_list_or_404(Tag)
 
+		s_tag= TagSerializer(tag_list, many=True) 
 
-		tag_json = json.dumps([ dict(id= tag.pk, name= tag.name, slug= tag.slug) for tag in tag_list])
+		tag_json = JSONRenderer().render(s_tag.data) 
 
 		return HttpResponse(tag_json,content_type="application/json") 
+
+
 
 
