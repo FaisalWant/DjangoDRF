@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 
 
-from .models import Tag 
+from .models import Tag,Startup
 
 from django.shortcuts import (
 	get_list_or_404, 
@@ -16,7 +16,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response 
 from rest_framework.views import APIView 
 
-from .serializers import TagSerializer
+from .serializers import TagSerializer, StartupSerializer
 
 
 
@@ -56,4 +56,29 @@ class TagApiList(APIView):
 
 
 
+class StartupApiDetail(APIView): 
 
+	def get(self, request, slug): 
+		startup= get_object_or_404(Startup, slug=slug)
+		s_startup= StartupSerializer(
+			startup, 
+			context= {
+			"request": request
+			})
+
+		return Response(s_startup.data) 
+
+
+
+class StartupApiList(APIView): 
+
+	def get(self, request): 
+		startup_list= get_list_or_404(Startup) 
+		s_startup= StartupSerializer(
+			startup_list, 
+			many= True, 
+			context={
+			"request": request 
+			})
+
+		return Response(s_startup.data) 
