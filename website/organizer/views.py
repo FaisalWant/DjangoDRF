@@ -1,11 +1,10 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse 
 
-from django.views import View 
 
-import json 
+
+
 from .models import Tag 
 
 from django.shortcuts import (
@@ -14,39 +13,46 @@ from django.shortcuts import (
 	)
 
 from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response 
+from rest_framework.views import APIView 
 
 from .serializers import TagSerializer
 
 
 
 
-class TagApiDetail(View): 
+class TagApiDetail(APIView): 
 
 	def get(self, request, pk ): 
 
 		tag= get_object_or_404(Tag,pk=pk)
 		
-		s_tag= TagSerializer(tag) 
+		s_tag= TagSerializer(tag, 
+			context= {"request": request},
 
-		tag_json= JSONRenderer().render(s_tag.data)
-
-		return HttpResponse(tag_json, content_type="application/json") 
-
+			) 
 
 
+		
+		return Response(s_tag.data) 
 
 
-class TagApiList(View): 
+
+
+
+class TagApiList(APIView): 
 
 	def get(self, request): 
 
 		tag_list = get_list_or_404(Tag)
 
-		s_tag= TagSerializer(tag_list, many=True) 
+		s_tag= TagSerializer(tag_list, 
+			many=True,
+			context= {"request":request}) 
 
-		tag_json = JSONRenderer().render(s_tag.data) 
+		
 
-		return HttpResponse(tag_json,content_type="application/json") 
+		return Response(s_tag.data)
 
 
 
