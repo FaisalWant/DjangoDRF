@@ -7,78 +7,45 @@ from django.shortcuts import render
 
 from .models import Tag,Startup
 
-from django.shortcuts import (
-	get_list_or_404, 
-	get_object_or_404
+from rest_framework.generics import (
+	ListApiView,
+	RetrieveAPIView
 	)
 
 from rest_framework.renderers import JSONRenderer
-from rest_framework.response import Response 
-from rest_framework.views import APIView 
+
 
 from .serializers import TagSerializer, StartupSerializer
 
 
 
 
-class TagApiDetail(APIView): 
+class TagApiDetail(RetrieveAPIView): 
 
-	def get(self, request, slug ): 
+	queryset= Tag.objects.all()
+	serializer_class= TagSerializer
+	lookup_field="slug" 
 
-		tag= get_object_or_404(Tag,slug=slug)
-		
-		s_tag= TagSerializer(tag, 
-			context= {"request": request},
-
-			) 
+	
 
 
-		
-		return Response(s_tag.data) 
+class TagApiList(ListAPIView): 
 
+	queryset= Tag.objects.all()
+	serializer_class= TagSerializer 
 
 
 
+class StartupApiDetail(RetrieveAPIView): 
 
-class TagApiList(APIView): 
-
-	def get(self, request): 
-
-		tag_list = get_list_or_404(Tag)
-
-		s_tag= TagSerializer(tag_list, 
-			many=True,
-			context= {"request":request}) 
-
-		
-
-		return Response(s_tag.data)
+	queryset= Startup.objects.all()
+	serializer_class= StartupSerializer 
+	lookup_field= "slug" 
 
 
 
-class StartupApiDetail(APIView): 
+class StartupApiList(ListAPIView): 
 
-	def get(self, request, slug): 
-		startup= get_object_or_404(Startup, slug=slug)
-		s_startup= StartupSerializer(
-			startup, 
-			context= {
-			"request": request
-			})
-
-		return Response(s_startup.data) 
-
-
-
-class StartupApiList(APIView): 
-
-	def get(self, request): 
-		startup_list= get_list_or_404(Startup) 
-		s_startup= StartupSerializer(
-			startup_list, 
-			many= True, 
-			context={
-			"request": request 
-			})
-
-		return Response(s_startup.data) 
+	queryset= Startup.objects.all()
+	serializers_class= StartupSerializer 
+	
