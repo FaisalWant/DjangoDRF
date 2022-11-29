@@ -1,3 +1,14 @@
+{% extends parent_template|default:"post/base.html" %}
+
+{% block title %} 
+
+{{ block.super }} -- {{ post.title|title }}
+{% endblock %} 
+
+
+{% block content %} 
+
+
 <article> 
 	<header> 
 		<h2> {{ post.title|title }}
@@ -48,3 +59,6 @@
 	</footer>
 	{% endif %} 
 </article>
+
+
+{% endblock %}

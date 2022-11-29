@@ -1,3 +1,13 @@
+{% extends parent_template|default:"startup/base.html" %}
+
+{% block title %}
+  {{ startup.name }}
+{% endblock %}
+
+{% block content %}
+
+
+
 <h2> Startup List </h2>
 
 <ul> 
@@ -13,3 +23,5 @@
  
  {% endfor %} 
 </ul>
+
+{% endblock %} 

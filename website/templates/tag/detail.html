@@ -1,3 +1,15 @@
+
+{% extends parent_template|default:"tag/base.html" %}
+
+{% block title %}
+  {{ tag.name|title }}
+{% endblock %}
+
+{% block content %}
+
+
+
+
 <h2> {{ tag.name | title }} </h2>
 
 
@@ -22,3 +34,6 @@
 	</ul>
 </section>
 {% endif %} 
+
+
+{% endblock  %} 
