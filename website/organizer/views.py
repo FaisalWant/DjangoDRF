@@ -8,7 +8,7 @@ from django.shortcuts import render
 from .models import Tag,Startup
 
 from rest_framework.generics import (
-	ListApiView,
+	ListAPIView,
 	RetrieveAPIView
 	)
 
