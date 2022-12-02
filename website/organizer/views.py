@@ -21,27 +21,25 @@ from rest_framework.renderers import JSONRenderer
 
 from .serializers import TagSerializer, StartupSerializer
 
+from django.view import View
+
+class TagList(View): 
+	""" Display a list of Tags""" 
+	def get(self, request): 
+		""" Render an HTML template of a list of tags"""
+		tag_list= Tag.objects.all()
+		context = {"tag_list": tag_list} 
+		return render(request, "tag/lists.html", context) 
 
 
-@require_safe 
-def tag_list(request): 
-	""" Render an HTML template """
-	tag_list= Tag.objects.all()
-	context= {"tag_list": tag_list}
-	
-	return render(request, "tag/list.html", context) 
+class TagDetail(View): 
+	""" Display a single Tag""" 
 
-
-
-@require_safe 
-def tag_detail(request, slug): 
-	""" Render an HTML template""" 
-	tag= get_object_or_404(Tag, slug=slug) 
-	
-	context= {"tag": tag} 
-	
-	return render(request, "tag/detail.html",context) 
-
+	def get(self, request, slug): 
+		""" Render an HTML template of a tags""" 
+		tag= get_object_or_404(Tag, slug=slug) 
+		context= {"tag": tag} 
+		return render(request, "tag/detail.html", context)
 
 
 
