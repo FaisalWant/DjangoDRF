@@ -13,7 +13,8 @@ from .models import Tag,Startup
 
 from rest_framework.generics import (
 	ListAPIView,
-	RetrieveAPIView
+	RetrieveAPIView,
+	ListCreateAPIView
 	)
 
 from rest_framework.renderers import JSONRenderer
@@ -24,11 +25,7 @@ from .serializers import TagSerializer, StartupSerializer
 from django.views.generic import DetailView, ListView
 
 
-from rest_framework.response import Response 
-from rest_framework.status import (
-	HTTP_201_CREATED, 
-	HTTP_400_BAD_REQUEST,
-	)
+
 
 
 class StartupList(ListView): 
@@ -68,27 +65,10 @@ class TagApiDetail(RetrieveAPIView):
 	
 
 
-class TagApiList(ListAPIView): 
+class TagApiList(ListCreateAPIView): 
 
 	queryset= Tag.objects.all()
 	serializer_class= TagSerializer 
-
-	def post(self, request): 
-		""" Create new Tag upon POST""" 
-
-		s_tag= self.serializer_class(
-			data=request.data, context={"request": request}
-		)
-
-		if s_tag.is_valid(): 
-			s_tag.save()
-			return Response(
-				s_tag.data, status=HTTP_201_CREATED
-				)
-
-		return Response(
-			s_tag.errors, status=HTTP_400_BAD_REQUEST
-			)
 
 
 
