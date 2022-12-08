@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse 
 
 # Create your models here.
 class Tag(models.Model): 
@@ -14,6 +15,12 @@ class Tag(models.Model):
 	def __str__(self):
 		return self.name
 
+	def get_absolute_url(self): 
+		""" Return Url to detail page of Tag""" 
+		return reverse (
+			"tag_detail", kwargs={"slug": self.slug })
+
+	
 
 
 
@@ -35,6 +42,12 @@ class Startup(models.Model):
 		return self.name 
 
 
+	def get_absolute_url(self): 
+
+		return reverse(
+			"startup_detail", kwargs={"slug": self.slug })
+
+
 
 
 
@@ -44,6 +57,7 @@ class NewsLink(models.Model):
 	pub_date= models.DateField("date published") 
 	link= models.URLField(max_length=255) 
 	startup= models.ForeignKey(Startup, on_delete=models.CASCADE)
+	
 	class Meta: 
 		get_latest_by= "pub_date" 
 		ordering= ["-pub_date"]
@@ -52,3 +66,6 @@ class NewsLink(models.Model):
 
 	def __str__(self): 
 		return f"{self.startup}: {self.title}"
+
+
+	
