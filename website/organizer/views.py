@@ -76,8 +76,9 @@ class TagApiList(ListAPIView):
 	def post(self, request): 
 		""" Create new Tag upon POST""" 
 
-		s_tag= TagSerializer(
-			data=request.data, context={"request": request})
+		s_tag= self.serializer_class(
+			data=request.data, context={"request": request}
+		)
 
 		if s_tag.is_valid(): 
 			s_tag.save()
