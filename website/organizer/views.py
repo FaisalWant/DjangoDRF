@@ -43,7 +43,7 @@ class TagList(ListView):
 class TagDetail(DetailView): 
 	""" Display a single Tag""" 
 
-	queryset= Tag.object.all()
+	queryset= Tag.objects.all()
 	template_name= "tag/detail.html"
 
 
