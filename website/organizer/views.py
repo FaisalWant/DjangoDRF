@@ -24,12 +24,10 @@ from .serializers import TagSerializer, StartupSerializer
 
 from django.views.generic import DetailView, ListView
 
-from rest_framework.response import Response 
 
-from rest_framework.status import HTTP_204_NO_CONTENT
 
 from rest_framework.status immport(
-	RetrieveUpdateAPIView
+	RetrieveUpdateDestroyAPIView
 	)
 
 
@@ -64,19 +62,13 @@ class TagDetail(DetailView):
 # DRF-------------------------------------
 
 
-class TagApiDetail(RetrieveUpdateAPIView): 
+class TagApiDetail(RetrieveUpdateDestroyAPIView): 
 
 	queryset= Tag.objects.all()
 	serializer_class= TagSerializer
 	lookup_field="slug" 
 
-	def delete(self, request, slug): 
-		"""DELETE the Tag with specified slug""" 
-		tag= self.get_object()
-		tag.delete()
-		return Response(status= HTTP_204_NO_CONTENT) 
 
-	
 
 
 class TagApiList(ListCreateAPIView): 
