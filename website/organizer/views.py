@@ -71,8 +71,8 @@ class TagApiDetail(RetrieveAPIView):
 
 	def put(self, request, slug): 
 		""" update existing Tag upon PUT""" 
-		tag= get_object_or_404(Tag, slug= slug) 
-		s_tag= TagSerializer(
+		tag= self.get_object()
+		s_tag= self.serializer_class(
 			tag, 
 			data=request.data, 
 			context={"request": request},
