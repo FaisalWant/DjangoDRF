@@ -25,7 +25,7 @@ class TagSerializer(HyperlinkedModelSerializer):
 class StartupSerializer(HyperlinkedModelSerializer): 
 
 
-	tags= TagSerializer(many=True,read_only=True)  
+	tags= TagSerializer(many=True)  
 
 	class Meta: 
 		model = Startup 
@@ -36,6 +36,23 @@ class StartupSerializer(HyperlinkedModelSerializer):
 		"view_name": "api-startup-detail"
 		}
 		}
+
+	def create(self, validated_data): 
+		""" Create Startup and associate Tags"""
+		tag_data_list= validated_data.pop("tags") 
+		startup= Startup.objects.create(**validated_data) 
+
+		# the code below, where we relate bulk-creates objects, 
+		# works only in databases that returns PK after bulk insert, 
+		# whihc at the time of writing is only PostgreSQL 
+
+		tag_list= Tag.objects.bulk_create(
+			[Tag(**tag_data) for tag_data in tag_data_list ])
+
+		startup.tags.add(*tag_list) 
+		return startup 
+
+
 
 
 
