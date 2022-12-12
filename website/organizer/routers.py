@@ -16,18 +16,18 @@ from .viewsets import TagViewSet
 
 api_router= SimpleRouter()
 api_router.register("tag", TagViewSet, base_name="api-tag") 
+apt_router.register("startup", StartupViewSet, base_name="api-startup") 
+
 api_routes = api_router.urls 
 
 
 
 
 
-urlpatterns= api_routes+ [
+urlpatterns= api_routes + [
 
-path("<str:slug>/", TagApiDetail.as_view(), name="api-tag-detail"),
-path("startup/<str:slug>/", StartupApiDetail.as_view(), name="api-startup-detail"),
-path("tag/", tag_create_list, name="api-tag-list"),
-path("tag/<str:slug>/", tag_retrieve_update_delete, name="api-tag-detail"),
-path("startup", StartupApiList.as_view(), name="api-startup-list")
+path("newslink", NewsLinkAPIListList.as_view(), name="api-newslink-list"),
+
+path("newslink/<str:startup_slug>/<str:newslink_slug/", NewsLinkAPIDetail.as_view(), name="api-newslink-detail"),
 
 ]
