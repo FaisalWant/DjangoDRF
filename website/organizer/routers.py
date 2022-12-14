@@ -6,17 +6,19 @@ from .views import (
 	TagApiDetail, 
 	TagApiList,
 	StartupApiDetail, 
-	StartupApiList 
+	StartupApiList, 
 	NewsLinkAPIDetail, 
-	NewsLinkAPIList
+	NewsLinkAPIList,
+	
 	 )
+from rest_framework.routers import SimpleRouter
 
 
-from .viewsets import TagViewSet 
+from .viewsets import TagViewSet,StartupViewSet
 
 api_router= SimpleRouter()
-api_router.register("tag", TagViewSet, base_name="api-tag") 
-apt_router.register("startup", StartupViewSet, base_name="api-startup") 
+api_router.register("tag", TagViewSet, basename="api-tag") 
+api_router.register("startup", StartupViewSet, basename="api-startup") 
 
 api_routes = api_router.urls 
 
@@ -26,7 +28,7 @@ api_routes = api_router.urls
 
 urlpatterns= api_routes + [
 
-path("newslink", NewsLinkAPIListList.as_view(), name="api-newslink-list"),
+path("newslink", NewsLinkAPIList.as_view(), name="api-newslink-list"),
 
 path("newslink/<str:startup_slug>/<str:newslink_slug/", NewsLinkAPIDetail.as_view(), name="api-newslink-detail"),
 

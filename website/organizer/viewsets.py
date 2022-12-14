@@ -11,8 +11,8 @@ from rest_framework.status import (
 
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Tag 
-from .serializers import TagSerializer 
+from .models import Tag, Startup
+from .serializers import TagSerializer,StartupSerializer 
 
 
 class TagViewSet(ModelViewSet):
