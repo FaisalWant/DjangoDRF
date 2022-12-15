@@ -24,9 +24,18 @@ from .serializers import TagSerializer, StartupSerializer, NewsLinkSerializer
 
 from django.views.generic import DetailView, ListView
 
+from django.views import View 
+
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 
 from .models import NewsLink, Startup, Tag
+
+from django.shortcuts import (
+	get_object_or_404,
+	redirect, 
+	render )
+
+
 
 
 
@@ -51,6 +60,95 @@ class TagDetail(DetailView):
 
 	queryset= Tag.objects.all()
 	template_name= "tag/detail.html"
+
+
+class TagCreate(View): 
+	""" Create new Tags via HTML form""" 
+
+	def get(self, request): 
+		""" Display an HTML form""" 
+		context= {"form": TagForm(), "update": False}
+
+		return render(request, "tag/form.html", context) 
+
+
+	def post(self, request): 
+		tform= TagForm(request.POST) 
+		if tform.is_valid():
+			tag= tform.save()
+			return redirect(tag.get_absolute_url())
+
+
+		context={"form": tform, "update": False } 
+		return render(request, "tag/form.html", context) 
+
+
+
+class TagUpdate(View): 
+	def get(self, request, slug): 
+		""" Display an HTML for with pre-filled data""" 
+
+		tag= get_object_or_404(Tag, slug=slug)
+
+		context= {
+		"tag":tag, 
+		"form": TagForm(instance=tag), 
+		"update":True, 
+		}
+		return render(request, "tag/form.html", context) 
+
+
+	def post(self, request, slug): 
+
+		""" Handle Form submission: save Tag""" 
+		tag= get_object_or_404(Tag, slug=slug) 
+		tform= TagForm(request.POST, instance= tag) 
+
+		if tform.is_valid():
+			tag= tform.save() 
+			return redirect(tag.get_absolute_url())
+
+		context ={
+		"tag":tag, 
+		"form":tform,
+		"update":True, 
+
+		}
+
+		return render(request, "tag/form.html", context)
+
+
+
+class TagDelete(View): 
+	""" confirm and delete a Tag via HTML""" 
+
+	def get(self, request, slug): 
+		""" Display an HTML form to confirm removal""" 
+
+		tag= get_object_or_404(Tag, slug=slug) 
+		return render(
+			request, "tag/confirm_delete.html", {"tag": tag})
+
+
+
+	def post(self, request, slug):
+		""" Deelte Tag """
+
+		tag= get_object_or_404(Tag, slug=slug) 
+		tag.delete()
+		return redirect(reverse("tag_list"))
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
