@@ -22,6 +22,7 @@ from blog.routers import urlpatterns as blog_api_urls
 from organizer.routers import urlpatterns as organizer_api_urls
 from blog import urls as blog_urls
 
+
 api_urls = blog_api_urls + organizer_api_urls 
 
 
@@ -29,5 +30,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("",include(organizer_urls)),
     path("api/v1/", include(api_urls)),
-    path("blog/",include(blog_urls))
+    path("blog/",include(blog_urls)),
+    path("", include(testapp_urls))
 ]
