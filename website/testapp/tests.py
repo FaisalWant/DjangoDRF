@@ -1,4 +1,4 @@
-from django.test import TestCase
+from test_plus.test import TestCase 
 
 from django.urls import reverse 
 
@@ -65,11 +65,8 @@ class DemoTests(TestCase):
 	def test_status_get(self): 
 		""" Test the status page""" 
 
-		url= reverse("site_status") 
-		self.assertEqual(url, "/status/")
-		response= self.client.get(url) 
-
-		self.assertEqual(response.status_code, 200) 
+	
+		response= self.get_check_200("site_status")
 		templates=[
 			"base.html", 
 			"testapp/base.html", 
@@ -79,11 +76,12 @@ class DemoTests(TestCase):
 		for t_name in templates: 
 			with self.subTest(template_name): 
 				self.assertTemplateUsed(response, t_name) 
-				
-		self.assertIn("status", response.context) 
-		self.assertEqual(response.context['status'], "Good") 
 
-		self.assertInHTML(
-			"<p> Status is Good</p>", 
-			response.content.decode("utf-8"), 
-			)
+
+		self.assertInContext("status") 
+		self.assertContext("status", "Good") 
+		self.assertResponseContains("Status is Good", html=False
+
+			) 
+
+
