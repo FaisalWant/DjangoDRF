@@ -4,7 +4,7 @@ from django_extensions.db.fields import AutoSlugField
 
 
 class Tag(Model): 
-	name = CharField(max_length=31) 
+	name = CharField(max_length=31, unique=True)  
 	slug= AutoSlugField(
 		help_text= "A label for URL config", 
 		max_length= 31, 
