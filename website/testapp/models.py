@@ -12,3 +12,6 @@ class Tag(Model):
 
 		)
 # Create your models here.
+
+	class Meta:
+		ordering=["name"]
