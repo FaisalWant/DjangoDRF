@@ -41,6 +41,8 @@ from django.shortcuts import (
 	redirect, 
 	render )
 
+from .forms import TagForm
+from django.urls import reverse_lazy
 
 
 

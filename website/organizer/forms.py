@@ -1,12 +1,13 @@
 """" Forms for the organizer app"""
 
 
-from django.forms impor CharField, Form, SlugField 
+from django.forms import CharField, Form, SlugField 
 from django.core.exceptions import ValidationError 
 
 
-from .models import Tag 
+from .models import Tag, Startup
 
+from django.forms import ModelForm
 
 class LowercaseNameMixin: 
 	def clean_name(self): 
