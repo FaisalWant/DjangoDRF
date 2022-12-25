@@ -20,7 +20,7 @@ class TagModelTestDemo(TestCase):
 		""" Are Tags with identical names disallowed""" 
 
 		kwargs= dict(name="a") 
-		Tag.objects.create(**kwargs) 
+		TagFactory(**kwargs) 
 		with self.assertRaises(IntegrityError): 
 			Tag.objects.create(**kwargs) 
 
