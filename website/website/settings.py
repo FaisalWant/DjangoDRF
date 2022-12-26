@@ -128,10 +128,26 @@ DATABASES = {"default": ENV.db("DATABASE_URL")}
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
+
+AUTH_USER_MODEL="user.User"
+AUTH_P= "django.contrib.auth.password_validation."
+
+
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': AUTH_P+"UserAttributeSimilarityValidator",
+        'OPTIONS':{
+        "user_attributes":{
+        "email",
+        "full_name",
+        "short_name",
+        }
+        }
     },
+
+
+
+
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
@@ -144,6 +160,17 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+
+
+
+PASSWORD_HASHERS =[
+    "django.contrib.auth.hashers.Argon2PasswordHasher", 
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    
+
+
+]
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
