@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from testapp import urls as testapp_urls 
 from organizer import urls as organizer_urls
-
+from django.contrib.auth import urls as django_auth_urls
 from blog.routers import urlpatterns as blog_api_urls 
 from organizer.routers import urlpatterns as organizer_api_urls
 from blog import urls as blog_urls
@@ -31,5 +31,13 @@ urlpatterns = [
     path("",include(organizer_urls)),
     path("api/v1/", include(api_urls)),
     path("blog/",include(blog_urls)),
-    path("", include(testapp_urls))
+    path("", include(testapp_urls)),
+    path("", 
+    	include(
+    		(django_auth_urls, "auth"), namespace= "auth"),
+    	),
+    path("", TemplateView.as_view(template_name="root.html"),
+    	name="site_root",
+    	),
+
 ]
