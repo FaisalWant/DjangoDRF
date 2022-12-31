@@ -5,6 +5,10 @@
   <form method="post" action=".">
     {% csrf_token %}
     {{ form.as_p }}
+    {% if next %}
+    <input type="hidden" name= "next" value="{{ next }}">
+
+    {% endif %}
     <button type="submit">Log In</button>
   </form>
 {% endblock %}

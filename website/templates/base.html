@@ -14,12 +14,24 @@
         to improve your experience and security.
       </p>
     <![endif]-->
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          {% if message.tags %}
+            <li class="{{ message.tags }}">
+          {% else %}
+            <li>
+          {% endif %}
+          {{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
     <ul>
       {% if user.is_authenticated %}
         <li><a href="{% url 'auth:logout' %}">
           Log Out</a></li>
       {% else %}
-        <li><a href="{% url 'auth:login' %}">
+        <li><a href="{% url 'auth:login' %}?next={{ request.path }}">
           Log In</a></li>
       {% endif %}
     </ul>
@@ -43,4 +55,3 @@
     <footer>
   </body>
 </html>
-
