@@ -1,31 +1,46 @@
-<!doctype html> 
-<html> 
-<head> 
-	<title> {% block title %} Startup Organizer {% endblock %} </title>
-</head>
-
-<body> 
-	<p class= "browserupgrade">
-		You are using an <strong> outdated </strong> browser.Please 
-		<a href= "http://browsehapp.com/"> upgarde your browser </a>
-		to improve your experience and security
-
-		<p> to import your experiece and security </p>
-
-
-<ul> 
-	{% if user.is_authenticated %} 
-	<li> <a href="{% url 'auth:logout' %}">
-	LogOut </a></li>
-
-{% else %} 
-<li> <a href="{% url 'auth:login' %}"> Login </a></li>
-
-</ul>
-
-<nav> <ul><li> <a href="{% url 'post_list' %}"> Blog </a></li> 
-
-	</p>
-	{% block content %} {% endblock %} 
-</body>
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}Startup Organizer{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body>
+    <!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a>
+        to improve your experience and security.
+      </p>
+    <![endif]-->
+    <ul>
+      {% if user.is_authenticated %}
+        <li><a href="{% url 'auth:logout' %}">
+          Log Out</a></li>
+      {% else %}
+        <li><a href="{% url 'auth:login' %}">
+          Log In</a></li>
+      {% endif %}
+    </ul>
+    <nav>
+      <ul>
+        <li><a href="{% url 'post_list' %}">Blog</a></li>
+        <li><a href="{% url 'startup_list' %}">Startups</a></li>
+        <li><a href="{% url 'tag_list' %}">Tags</a></li>
+        <li><a href="{% url 'api-root' %}">Browse API</a></li>
+      </ul>
+    </nav>
+    {% block content %}{% endblock %}
+    <footer>
+      <p>
+        Built by
+        <a href="https://andrewsforge.com">Andrew Pinkham</a>
+        under the
+        <a href="https://opensource.org/licenses/BSD-2-Clause">
+          Simplified BSD License</a>.
+      </p>
+    <footer>
+  </body>
 </html>
+
