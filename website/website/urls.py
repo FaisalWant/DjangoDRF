@@ -21,9 +21,15 @@ from django.contrib.auth import urls as django_auth_urls
 from blog.routers import urlpatterns as blog_api_urls 
 from organizer.routers import urlpatterns as organizer_api_urls
 from blog import urls as blog_urls
+from user import urls as user_urls
 
 
-api_urls = blog_api_urls + organizer_api_urls 
+root_api_url=[
+	path("", RootApiView.as_view(), name="api-root")
+
+	]
+
+api_urls = root_api_url+ blog_api_urls + organizer_api_urls 
 
 
 urlpatterns = [
@@ -34,7 +40,7 @@ urlpatterns = [
     path("", include(testapp_urls)),
     path("", 
     	include(
-    		(django_auth_urls, "auth"), namespace= "auth"),
+    		(user_urls, "auth"), namespace= "auth"),
     	),
     path("", TemplateView.as_view(template_name="root.html"),
     	name="site_root",
