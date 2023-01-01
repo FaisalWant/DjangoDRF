@@ -159,7 +159,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+LOGIN_URL="auth:login"
 LOGIN_REDIRECT_URL="site_root"
 LOGOUT_REDIRECT_URL="auth:login"
 
