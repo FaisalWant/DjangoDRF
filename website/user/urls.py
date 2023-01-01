@@ -13,8 +13,8 @@ from django.views.generic import TemplateView
 
 urlpatterns=[
 	path("account/", login_required(TemplateView.as_view(template_name="user/account.html")),name="account")
-	path("login/", LoginView.as_view(), name="login"),
-	path("logout/",LogoutView.as_view(), name="logout"),
+	path("login/", LoginView.as_view(template_name="user/login.html"), name="login"),
+	path("logout/",LogoutView.as_view(template_name="user/logout.html"), name="logout"),
 	path(
 		"password_change", PasswordChangeView.as_view(success_url=reverse_lazy("auth:password_change_done")),
 		name="password_change",), 
