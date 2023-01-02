@@ -33,3 +33,24 @@ messages success to user """
 success_message= "Password Changed Successfully"
 success_url= reverse_lazy("auth:account")
 template_name="user/password_change_form.html"
+
+
+
+
+
+ class PasswordResetView(
+      SuccessMessageMixin, BasePasswordResetView
+  ):
+      """Allow anonymous users to reset password;
+  
+      Messages success to user
+      """ 
+  
+      subject_template_name = (
+          "user/password_reset_subject.txt"
+      )
+      success_message = (
+          "Password email sent: please check your email"
+      )
+      success_url = reverse_lazy("auth:login")
+      template_name = "user/password_reset_form.html"
