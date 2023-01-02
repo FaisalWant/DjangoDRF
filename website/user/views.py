@@ -54,3 +54,13 @@ template_name="user/password_change_form.html"
       )
       success_url = reverse_lazy("auth:login")
       template_name = "user/password_reset_form.html"
+
+
+ class PasswordResetConfirmView(
+     SuccessMessageMixin, BasePasswordResetConfirmView
+ ):
+     """Prompt user for a new password"""
+ 
+     success_message = "Password reset: Please login with your new password."
+     success_url = reverse_lazy("auth:login")
+     template_name = "user/password_reset_confirm.html"
