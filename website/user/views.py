@@ -2,8 +2,28 @@ from django.contrib.auth.views import (
 	PasswordChangeView as BasePasswordChangeView,
 	)
 
+
+
+from django.contrib.auth.views import (
+	PasswordChangeView as BasePasswordChangeView,
+	PasswordResetConfirmView as BasePasswordResetConfirmView,
+	PasswordResetView as BasePasswordResetView
+
+	)
 from django.contrib.messages import success 
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+
+class AccountPage(LoginRequiredMixin, TemplateView):
+	  """Display page with links to manage account
+  
+	  For instance, link to page to change password.
+	  """
+  
+	  template_name = "user/account.html"
+  
 
 
 class SuccessMessageMixin: 
@@ -39,28 +59,28 @@ template_name="user/password_change_form.html"
 
 
  class PasswordResetView(
-      SuccessMessageMixin, BasePasswordResetView
+	  SuccessMessageMixin, BasePasswordResetView
   ):
-      """Allow anonymous users to reset password;
+	  """Allow anonymous users to reset password;
   
-      Messages success to user
-      """ 
+	  Messages success to user
+	  """ 
   
-      subject_template_name = (
-          "user/password_reset_subject.txt"
-      )
-      success_message = (
-          "Password email sent: please check your email"
-      )
-      success_url = reverse_lazy("auth:login")
-      template_name = "user/password_reset_form.html"
+	  subject_template_name = (
+		  "user/password_reset_subject.txt"
+	  )
+	  success_message = (
+		  "Password email sent: please check your email"
+	  )
+	  success_url = reverse_lazy("auth:login")
+	  template_name = "user/password_reset_form.html"
 
 
  class PasswordResetConfirmView(
-     SuccessMessageMixin, BasePasswordResetConfirmView
+	 SuccessMessageMixin, BasePasswordResetConfirmView
  ):
-     """Prompt user for a new password"""
+	 """Prompt user for a new password"""
  
-     success_message = "Password reset: Please login with your new password."
-     success_url = reverse_lazy("auth:login")
-     template_name = "user/password_reset_confirm.html"
+	 success_message = "Password reset: Please login with your new password."
+	 success_url = reverse_lazy("auth:login")
+	 template_name = "user/password_reset_confirm.html"

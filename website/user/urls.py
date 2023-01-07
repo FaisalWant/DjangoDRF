@@ -4,7 +4,8 @@ from django.contrib.auth.views import (
 	PasswordChangeDoneView,
 	PasswordChangeView,
 	PasswordResetView,
-	PasswordResetConfirmView
+	PasswordResetConfirmView,
+	AccountPage
 		)
 
 
@@ -14,7 +15,7 @@ from django.urls import path, reverse_lazy
 from django.views.generic import TemplateView 
 
 urlpatterns=[
-	path("account/", login_required(TemplateView.as_view(template_name="user/account.html")),name="account")
+	 path("account/", AccountPage.as_view(), name="account"), 
 	path("login/", LoginView.as_view(template_name="user/login.html"), name="login"),
 	path("logout/",LogoutView.as_view(template_name="user/logout.html"), name="logout"),
 	path(
