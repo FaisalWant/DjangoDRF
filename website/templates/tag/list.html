@@ -1,34 +1,26 @@
-
 {% extends parent_template|default:"tag/base.html" %}
 
 {% block title %}
   {{ block.super }} - Tag List
 {% endblock %}
 
-
 {% block content %}
-
-<h2> Tag List </h2>
-
-{% if tag_list %} 
-
-<ul>
-	{% for tag in tag_list %}
-
-	<li>
-		<a href ="{{ tag.get_absolute_url }}">
-		{{ tag.name|title }}</a>
-
-	</li>
-
-	{% endfor %} 
-</ul>
-
-{% else %} 
-
-<p> <em> There are currently no Tags available </em></p> 
-
-{% endif %} 
-
-
-{% endblock %} 
+  <h2>Tag List</h2>
+  {% if perms.organizer.add_tag %}
+    <p>
+      <a href="{% url 'tag_create' %}">
+        Add New Tag
+      </a>
+    <p>
+  {% endif %}
+  <ul>
+    {% for tag in tag_list %}
+      <li>
+        <a href="{{ tag.get_absolute_url }}">
+          {{ tag.name|title }}</a>
+      </li>
+    {% empty %}
+      <li><em>There are currently no Tags available.</em></li>
+    {% endfor %}
+  </ul>
+{% endblock %}
