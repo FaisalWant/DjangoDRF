@@ -14,6 +14,15 @@ from django.contrib.auth.decorators import login_required
 from django.urls import path, reverse_lazy
 from django.views.generic import TemplateView 
 
+from django_registration.backends.activation import (
+    urls as registration_urls,
+)
+from django_registration.backends.activation.views import (
+    RegistrationView,
+)
+
+from .forms import RegistrationForm
+
 urlpatterns=[
 	 path("account/", AccountPage.as_view(), name="account"), 
 	path("login/", LoginView.as_view(template_name="user/login.html"), name="login"),
@@ -27,5 +36,10 @@ urlpatterns=[
 
 	path("password_reset/", PasswordResetView.as_view(), name= "password_reset"),
 	path("password_reset/<uidb64>/<token>/", PasswordResetConfirmView.as_view(), name="password_reset_confirm",
-		)
+		),
+	path("register/",RegistrationView.as_view(form_class=RegistrationForm),
+        name="django_registration_register",
+    ),
+    path("", include(registration_urls)),
+
 	]
