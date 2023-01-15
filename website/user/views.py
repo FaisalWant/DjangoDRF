@@ -1,86 +1,99 @@
-from django.contrib.auth.views import (
-	PasswordChangeView as BasePasswordChangeView,
-	)
-
-
-
-from django.contrib.auth.views import (
-	PasswordChangeView as BasePasswordChangeView,
-	PasswordResetConfirmView as BasePasswordResetConfirmView,
-	PasswordResetView as BasePasswordResetView
-
-	)
-from django.contrib.messages import success 
-from django.urls import reverse_lazy
+"""Views for User app"""
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.views import (
+    PasswordChangeView as BasePasswordChangeView,
+    PasswordResetConfirmView as BasePasswordResetConfirmView,
+    PasswordResetView as BasePasswordResetView,
+)
+from django.contrib.messages import success
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView
+from django_registration.backends.activation.views import (
+    ActivationView as BaseActivationView,
+)
 
 
 class AccountPage(LoginRequiredMixin, TemplateView):
-	  """Display page with links to manage account
-  
-	  For instance, link to page to change password.
-	  """
-  
-	  template_name = "user/account.html"
-  
+    """Display page with links to manage account
+
+    For instance, link to page to change password.
+    """
+
+    template_name = "user/account.html"
 
 
-class SuccessMessageMixin: 
-	""" Notify user of success after submitting a form""" 
+class ActivationView(BaseActivationView):
+    """Notify user of activation and direct to login"""
 
-	success_message= "Success!"
+    success_url = reverse_lazy("auth:login")
 
-	def form_valid(self, form): 
-		""" When form is valid: notify user of success""" 
+    def activate(self, *args, **kwargs):
+        """Notify user after activating successfully
 
-		success(
-			self.request, 
-			self.success_message, 
-			fail_silently=True, 
-			)
+        https://github.com/ubernostrum/django-registration/blob/58be01f5858a/src/django_registration/backends/activation/views.py#L129
+        """
+        user = super().activate(*args, **kwargs)
+        success(
+            self.request,
+            "Your account has been activated."
+            " You may now sign-in.",
+            fail_silently=True,
+        )
+        return user
 
-		return super().form_valid(form) 
 
+class SuccessMessageMixin:
+    """Notify user of success after submitting a form"""
 
+    success_message = "Success!"
+
+    def form_valid(self, form):
+        """When form is valid: notify user of success"""
+        success(
+            self.request,
+            self.success_message,
+            fail_silently=True,
+        )
+        return super().form_valid(form)
 
 
 class PasswordChangeView(
-	SuccessMessageMixin, BasePasswordChangeView):
-""" Allow authenticated users to changes password: 
-messages success to user """ 
+    SuccessMessageMixin, BasePasswordChangeView
+):
+    """Allow authenticated users to change password;
 
-success_message= "Password Changed Successfully"
-success_url= reverse_lazy("auth:account")
-template_name="user/password_change_form.html"
+    Messages success to user
+    """
 
-
-
-
-
- class PasswordResetView(
-	  SuccessMessageMixin, BasePasswordResetView
-  ):
-	  """Allow anonymous users to reset password;
-  
-	  Messages success to user
-	  """ 
-  
-	  subject_template_name = (
-		  "user/password_reset_subject.txt"
-	  )
-	  success_message = (
-		  "Password email sent: please check your email"
-	  )
-	  success_url = reverse_lazy("auth:login")
-	  template_name = "user/password_reset_form.html"
+    success_message = "Password Changed Successfully"
+    success_url = reverse_lazy("auth:account")
+    template_name = "user/password_change_form.html"
 
 
- class PasswordResetConfirmView(
-	 SuccessMessageMixin, BasePasswordResetConfirmView
- ):
-	 """Prompt user for a new password"""
- 
-	 success_message = "Password reset: Please login with your new password."
-	 success_url = reverse_lazy("auth:login")
-	 template_name = "user/password_reset_confirm.html"
+class PasswordResetView(
+    SuccessMessageMixin, BasePasswordResetView
+):
+    """Allow anonymous users to reset password;
+
+    Messages success to user
+    """
+
+    email_template_name = "user/password_reset_email.txt"
+    subject_template_name = (
+        "user/password_reset_subject.txt"
+    )
+    success_message = (
+        "Password email sent: please check your email"
+    )
+    success_url = reverse_lazy("auth:login")
+    template_name = "user/password_reset_form.html"
+
+
+class PasswordResetConfirmView(
+    SuccessMessageMixin, BasePasswordResetConfirmView
+):
+    """Prompt user for a new password"""
+
+    success_message = "Password reset: Please login with your new password."
+    success_url = reverse_lazy("auth:login")
+    template_name = "user/password_reset_confirm.html"

@@ -1,28 +1,18 @@
-from django.contrib.auth.views import (
-	LoginView, 
-	LogoutView, 
-	PasswordChangeDoneView,
-	PasswordChangeView,
-	PasswordResetView,
-	PasswordResetConfirmView,
-	AccountPage
-		)
-
-
-from django.contrib.auth.decorators import login_required 
-
-from django.urls import path, reverse_lazy,re_path
-from django.views.generic import TemplateView 
-
-from django_registration.backends.activation import (
-    urls as registration_urls,
-)
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import path, re_path, reverse_lazy
+from django.views.generic import TemplateView
 from django_registration.backends.activation.views import (
     RegistrationView,
-    ActivationView
 )
 
 from .forms import RegistrationForm
+from .views import (
+    AccountPage,
+    ActivationView,
+    PasswordChangeView,
+    PasswordResetConfirmView,
+    PasswordResetView,
+)
 
 urlpatterns=[
 	path("account/", AccountPage.as_view(), name="account"), 
@@ -47,11 +37,8 @@ urlpatterns=[
     ),
     re_path(
         r"^activate/(?P<activation_key>[-:\w]+)/$",
-        ActivationView.as_view(
-            success_url=reverse_lazy(
-                "auth:django_registration_activation_complete"
-            )
-        ),
+        ActivationView.as_view(),
+        
         name="django_registration_activate",
     ),
     path(
