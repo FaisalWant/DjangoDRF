@@ -28,9 +28,13 @@
     {% endif %}
     <ul>
       {% if user.is_authenticated %}
+        <li><a href="{% url 'auth:account' %}">
+          Manage Account</a></li>
         <li><a href="{% url 'auth:logout' %}">
           Log Out</a></li>
       {% else %}
+        <li><a href="{% url 'auth:django_registration_register' %}">
+          Register</a></li>
         <li><a href="{% url 'auth:login' %}?next={{ request.path }}">
           Log In</a></li>
       {% endif %}
