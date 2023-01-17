@@ -38,6 +38,13 @@ urlpatterns = [
     path("api/v1/", include(api_urls)),
     path("blog/",include(blog_urls)),
     path("", include(testapp_urls)),
+    path(
+    "o/",
+    include(
+        "oauth2_provider.urls",
+        namespace="oauth2_provider",
+    ),
+),
     path("", 
     	include(
     		(user_urls, "auth"), namespace= "auth"),
@@ -45,5 +52,7 @@ urlpatterns = [
     path("", TemplateView.as_view(template_name="root.html"),
     	name="site_root",
     	),
+
+    
 
 ]

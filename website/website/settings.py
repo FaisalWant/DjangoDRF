@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_extensions',
     'rest_framework.authtoken',
+    'oauth2_provider',
+    'corsheaders',
     'organizer',
     'user'
 ]
@@ -57,6 +59,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
+         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
@@ -98,6 +101,7 @@ os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true" # only use in developmen
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -107,6 +111,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'website.urls'
+CORS_ORIGIN_ALLOW_ALL = True
 
 TEMPLATES = [
     {
