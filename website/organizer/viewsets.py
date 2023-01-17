@@ -20,6 +20,7 @@ class TagViewSet(ModelViewSet):
 
     lookup_field= "slug" 
     queryset= Tag.objects.all()
+    required_scopes=["tag"]
     serializer_class= TagSerializer
 
 
@@ -30,7 +31,7 @@ class StartupViewSet(ModelViewSet):
 
 	lookup_field= "slug" 
 	queryset= Startup.objects.all()
-
+	required_scopes=["tag"]
 	serializer_class= StartupSerializer
 
 	@action (detail=True, methods=["HEAD", "GET", "POST"])

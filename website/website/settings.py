@@ -59,13 +59,22 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
-         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+        "oauth2_provider.contrib.rest_framework.IsAuthenticatedOrTokenHasScope",
+        "rest_framework.permissions.DjangoModelPermissions",
     ),
 }
 
+OAUTH2_PROVIDER = {
+    "SCOPES": {
+        "newslink": "Access to news article links",
+        "post": "Access to blog posts",
+        "startup": "Access to startup data",
+        "tag": "Access to tag (labels) data",
+    }
+}
 
 
 SHELL_PLUS="ipython"
