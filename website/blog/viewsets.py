@@ -1,17 +1,21 @@
 """Viewsets for the Blog app"""
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
-
+from rest_framework.pagination import CursorPagination
 from .models import Post
 from .serializers import PostSerializer
-
+from rest_framework.filters import OrderingFilter
 
 class PostViewSet(ModelViewSet):
     """A set of views for Post model"""
 
     queryset = Post.objects.all()
+    filter_backends = [OrderingFilter]
+    ordering = "-pub_date"
+    ordering_fields = ["pub_date"]
     required_scopes = ["post"]
     serializer_class = PostSerializer
+    pagination_class = CursorPagination
 
     def get_object(self):
         """Override DRF's generic method

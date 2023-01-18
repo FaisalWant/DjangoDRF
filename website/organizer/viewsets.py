@@ -13,12 +13,13 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Tag, Startup
 from .serializers import TagSerializer,StartupSerializer 
-
+from rest_framework.pagination import PageNumberPagination
 
 class TagViewSet(ModelViewSet):
     """A set of views for the Tag model"""
 
     lookup_field= "slug" 
+    pagination_class = PageNumberPagination
     queryset= Tag.objects.all()
     required_scopes=["tag"]
     serializer_class= TagSerializer
